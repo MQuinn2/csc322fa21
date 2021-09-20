@@ -2,7 +2,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-//sets a random camera angle and color
+//randomizes the angle of the camera and the color of the cube
 let angle = Math.random() * 80;
 let angle1 = Math.random() * 80;
 let randColor = Math.random() * 10000 + 5000;
@@ -20,7 +20,7 @@ const material = new THREE.MeshBasicMaterial({
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
-//sets random position of cube
+//randomizes position of cube
 cube.position.x = Math.random() * 10;
 cube.position.y = Math.random() * 10;
 cube.position.z = Math.random() * 10;
