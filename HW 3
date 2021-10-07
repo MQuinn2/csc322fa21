@@ -1,0 +1,114 @@
+<script 
+src="https://threejs.org/build/three.js"></script>
+
+<!-- obtained from site that this assignment was adopted from, where this is listed as a template to start from to create a moving camera -->
+<meta charset="utf-8"/>
+<style>
+
+       canvas {
+          display: auto;
+          width: 100%;
+          height: 500px;
+      }
+    </style>
+<script src="https://cs.wellesley.edu/~cs307/threejs/libs/three-r95.all.js">
+"https://cs.wellesley.edu/~cs307/threejs/libs/three-r80.min.js"
+</script>
+<!-- omit dat.gui and OrbitControls if you don't need them -->
+<script src="https://cs.wellesley.edu/~cs307/threejs/libs/OrbitControls-r95.js">
+"https://cs.wellesley.edu/~cs307/threejs/libs/OrbitControls-r80.js"
+</script>
+<script src="https://cs.wellesley.edu/~cs307/threejs/libs/dat.gui-r95.js">
+"https://cs.wellesley.edu/~cs307/threejs/libs/dat.gui-r80.min.js"
+</script>
+<script src="https://cs.wellesley.edu/~cs307/threejs/libs/tw-sp21.js">
+"https://cs.wellesley.edu/~cs307/threejs/libs/tw-fa18.js"
+</script>
+
+
+
+const scene = new THREE.Scene();
+var renderer = new THREE.WebGLRenderer();
+
+//colors
+const yellow = new THREE.Color( 0xfff000 );
+const skyblue = new THREE.Color( 'skyblue' );
+const cyan = new THREE.Color( 'cyan' );
+const orange = new THREE.Color( 'orange' );
+const magenta = new THREE.Color( 'magenta' );
+const green = new THREE.Color( 'green' );
+const black = new THREE.Color('rgb(0,0,0)');
+const blue = new THREE.Color('rgb(0,0,255)');
+
+//variables
+var baseWidth = 55;
+var baseHeight = 500;
+var topWidth = 34;
+var topHeight = 55;
+
+const baseGeometry = new THREE.PlaneGeometry( baseWidth, baseHeight);
+const baseMaterial = new THREE.MeshBasicMaterial( {color: yellow} );
+const baseMaterial1 = new THREE.MeshBasicMaterial( {color: black} );
+const baseMaterial2 = new THREE.MeshBasicMaterial( {color: blue} );
+const baseMaterial3 = new THREE.MeshBasicMaterial( {color: skyblue} );
+const plane = new THREE.Mesh( baseGeometry, baseMaterial);
+const plane1 = new THREE.Mesh( baseGeometry, baseMaterial1);
+const plane2 = new THREE.Mesh( baseGeometry, baseMaterial2);
+const plane3 = new THREE.Mesh( baseGeometry, baseMaterial3);
+plane1.rotation.y += Math.PI / 2;
+plane1.position.x += baseWidth / 2; 
+plane1.position.z -= baseWidth / 2;
+plane2.rotation.y += Math.PI;
+plane2.position.z -= baseWidth;
+plane3.rotation.y -= Math.PI / 2;
+plane3.position.x -= baseWidth / 2;
+plane3.position.z -= baseWidth / 2;
+
+const baseVert = plane.geometry.vertices;
+baseVert[0].x += (baseWidth - topWidth) / 2 ;
+baseVert[0].z -= (baseWidth - topWidth) / 2;
+baseVert[1].x -= (baseWidth - topWidth) / 2;
+baseVert[1].z -= (baseWidth - topWidth) / 2;
+
+scene.add( plane, plane1, plane2, plane3 );
+
+//creates top pyramid
+const triangleGeometry = new THREE.PlaneGeometry( topWidth, topHeight );
+const triMaterial = new THREE.MeshBasicMaterial( {color: green} );
+const triMaterial1 = new THREE.MeshBasicMaterial( {color: cyan } );
+const triMaterial2 = new THREE.MeshBasicMaterial( {color: orange} );
+const triMaterial3 = new THREE.MeshBasicMaterial( {color: magenta} );
+const trianglePlane = new THREE.Mesh( triangleGeometry, triMaterial);
+const trianglePlane1 = new THREE.Mesh( triangleGeometry, triMaterial1);
+const trianglePlane2 = new THREE.Mesh( triangleGeometry, triMaterial2);
+const trianglePlane3 = new THREE.Mesh( triangleGeometry, triMaterial3);
+//positions top pyramid
+trianglePlane.position.y += baseHeight / 2 + topHeight / 2;
+trianglePlane.position.z -= (baseWidth - topWidth) / 2;
+trianglePlane1.position.y += baseHeight / 2 + topHeight / 2;
+trianglePlane1.position.z -= (baseWidth - topWidth) / 2 + topWidth / 2;
+trianglePlane1.position.x += topWidth / 2;
+trianglePlane1.rotation.y += Math.PI / 2;
+trianglePlane2.position.y += baseHeight / 2 + topHeight / 2;
+trianglePlane2.position.z -= (baseWidth - topWidth) / 2 + topWidth;
+trianglePlane2.rotation.y += Math.PI;
+trianglePlane3.position.y += baseHeight / 2 + topHeight / 2;
+trianglePlane3.position.z -= (baseWidth - topWidth) / 2 + topWidth / 2;
+trianglePlane3.position.x -= topWidth / 2;
+trianglePlane3.rotation.y -= Math.PI / 2;
+
+scene.add( trianglePlane, trianglePlane1, trianglePlane2, trianglePlane3 );
+
+var topVert = trianglePlane.geometry.vertices;
+topVert[0].x += topWidth / 2;
+topVert[0].z -= topWidth / 2;
+topVert[1].x -= topWidth / 2;
+topVert[1].z -= topWidth / 2;
+
+//obtained from the site [https://cs.wellesley.edu/~cs307/threejs/demos-s21-r95/Early/template.html] that this assignment was adopted from, where  this is listed as a template to start from to create a moving camera for all assignments there, including this one
+TW.mainInit(renderer,scene);
+TW.cameraSetup(renderer,
+               scene,
+               {minx: -300, maxx: 300,
+                miny: -3, maxy: 17,
+                minz: -20, maxz: 4});
