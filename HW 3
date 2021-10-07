@@ -40,7 +40,7 @@ const green = new THREE.Color( 'green' );
 const black = new THREE.Color('rgb(0,0,0)');
 const blue = new THREE.Color('rgb(0,0,255)');
 
-//variables
+//sizing variables
 var baseWidth = 55;
 var baseHeight = 500;
 var topWidth = 34;
@@ -64,6 +64,7 @@ plane3.rotation.y -= Math.PI / 2;
 plane3.position.x -= baseWidth / 2;
 plane3.position.z -= baseWidth / 2;
 
+//tapers sides to top
 const baseVert = plane.geometry.vertices;
 baseVert[0].x += (baseWidth - topWidth) / 2 ;
 baseVert[0].z -= (baseWidth - topWidth) / 2;
@@ -72,7 +73,7 @@ baseVert[1].z -= (baseWidth - topWidth) / 2;
 
 scene.add( plane, plane1, plane2, plane3 );
 
-//creates top pyramid
+//creates top pyramid planes
 const triangleGeometry = new THREE.PlaneGeometry( topWidth, topHeight );
 const triMaterial = new THREE.MeshBasicMaterial( {color: green} );
 const triMaterial1 = new THREE.MeshBasicMaterial( {color: cyan } );
@@ -82,7 +83,7 @@ const trianglePlane = new THREE.Mesh( triangleGeometry, triMaterial);
 const trianglePlane1 = new THREE.Mesh( triangleGeometry, triMaterial1);
 const trianglePlane2 = new THREE.Mesh( triangleGeometry, triMaterial2);
 const trianglePlane3 = new THREE.Mesh( triangleGeometry, triMaterial3);
-//positions top pyramid
+//positions top pyramid planes
 trianglePlane.position.y += baseHeight / 2 + topHeight / 2;
 trianglePlane.position.z -= (baseWidth - topWidth) / 2;
 trianglePlane1.position.y += baseHeight / 2 + topHeight / 2;
@@ -97,13 +98,14 @@ trianglePlane3.position.z -= (baseWidth - topWidth) / 2 + topWidth / 2;
 trianglePlane3.position.x -= topWidth / 2;
 trianglePlane3.rotation.y -= Math.PI / 2;
 
-scene.add( trianglePlane, trianglePlane1, trianglePlane2, trianglePlane3 );
-
+//draws upper corners of top planes to a central point to create a pyramid
 var topVert = trianglePlane.geometry.vertices;
 topVert[0].x += topWidth / 2;
 topVert[0].z -= topWidth / 2;
 topVert[1].x -= topWidth / 2;
 topVert[1].z -= topWidth / 2;
+
+scene.add( trianglePlane, trianglePlane1, trianglePlane2, trianglePlane3 );
 
 //obtained from the site [https://cs.wellesley.edu/~cs307/threejs/demos-s21-r95/Early/template.html] that this assignment was adopted from, where  this is listed as a template to start from to create a moving camera for all assignments there, including this one
 TW.mainInit(renderer,scene);
