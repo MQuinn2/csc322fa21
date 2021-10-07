@@ -46,6 +46,7 @@ var baseHeight = 500;
 var topWidth = 34;
 var topHeight = 55;
 
+//creates bottom four base planes
 const baseGeometry = new THREE.PlaneGeometry( baseWidth, baseHeight);
 const baseMaterial = new THREE.MeshBasicMaterial( {color: yellow} );
 const baseMaterial1 = new THREE.MeshBasicMaterial( {color: black} );
