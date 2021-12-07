@@ -9,8 +9,6 @@ src="https://threejs.org/build/three.js">
 </script>
 </body>
 
-
-
 //js
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas
